@@ -1,6 +1,6 @@
 Brexit
 ================
-Naomi Ekas
+Thomas Sease
 
 In September 2019, YouGov survey asked 1,639 GB adults the following
 question:
@@ -64,7 +64,7 @@ ggplot(brexit, aes(y = opinion, fill = opinion)) +
   geom_bar() +
   facet_wrap(~region,
     nrow = 1, labeller = label_wrap_gen(width = 12),
-    # ___
+    scales = "free_x"
   ) +
   guides(fill = FALSE) +
   labs(
@@ -96,8 +96,29 @@ visualisation telling different than the story the original plot tells?
 which means you’ll need to load it on top of the document as well.
 
 ``` r
-# code goes here
+brexit %>% 
+  count(region, opinion) %>% 
+  group_by(region) %>% 
+  mutate(opin.porportion = n/ sum(n)) %>% 
+  ggplot(aes(y = opinion, x = opin.porportion, fill = opinion)) +
+  geom_col() +
+  facet_wrap(~region, 
+             nrow = 1, labeller = label_wrap_gen(width = 12)) +
+    scale_fill_manual(values = c(
+    "Wrong" = "#ef8a62",
+    "Right" = "#67a9cf",
+    "Don't know" = "gray"
+  )) +
+   labs(
+    title = "Was Britain right/wrong to vote to leave EU?",
+    subtitle = "YouGov Survey Results, 2-3 September 2019",
+    caption = "Source: bit.ly/2lCJZVg",
+    x = "Proportion", y = "Answer"
+  ) +
+  theme_minimal()
 ```
+
+![](brexit_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 ### Exercise 3 - Comparing proportions across bars
 
