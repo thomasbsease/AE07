@@ -146,7 +146,7 @@ brexit %>%
     "Right" = "#67a9cf",
     "Don't know" = "gray"
   )) +
-  guides(fill = guide_legend(reverse = T))
+  guides(fill = guide_legend(reverse = T)) 
 ```
 
 ![](brexit_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
