@@ -115,7 +115,8 @@ brexit %>%
     caption = "Source: bit.ly/2lCJZVg",
     x = "Proportion", y = "Answer"
   ) +
-  theme_minimal()
+  theme_minimal() +
+  scale_x_continuous(labels = label_percent())
 ```
 
 ![](brexit_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
@@ -128,5 +129,23 @@ faceting by region and then improve the legend. How is the story this
 visualization telling different than the story the previous plot tells?
 
 ``` r
-# code goes here
+brexit %>% 
+  count(region, opinion) %>% 
+  group_by(region) %>% 
+  mutate(opin.porportion = n/ sum(n)) %>% 
+  ggplot(aes(y = fct_rev(region), x = opin.porportion, fill = opinion)) +
+  geom_col(position = "dodge") +
+  theme_minimal() +
+  labs(
+    title = "Was Britain right/wrong to vote to leave EU?",
+    subtitle = "YouGov Survey Results, 2-3 September 2019",
+    caption = "Source: bit.ly/2lCJZVg",
+    x = NULL, y = NULL, fill = "Opinion") +
+  scale_fill_manual(values = c(
+    "Wrong" = "#ef8a62",
+    "Right" = "#67a9cf",
+    "Don't know" = "gray"
+  ))
 ```
+
+![](brexit_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
